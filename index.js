@@ -1,6 +1,12 @@
-const HOME = require('os').homedir()
+import { format } from "path"
 
-module.exports.add = () => {
-  console.log(HOME)
-  console(1)
-}
+import * as http from 'http'
+
+const server = http.createServer((req, res) => {
+  console.log(req.url)
+  console.log('有人来了')
+})
+
+
+server.listen(3030)
+console.log('yyf');
