@@ -8,7 +8,7 @@
 /.pnp
 .pnp.js
 /.env.local
-ormconfig.json
+# ormconfig.json
 
 # testing
 /coverage

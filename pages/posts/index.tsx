@@ -26,7 +26,7 @@ const PostsIndex: NextPage<Props> = (props) => {
           {currentUser && <Link href="/posts/new"><a>新增文章</a></Link>}
         </header>
         {posts.map(post =>
-          <div className="onePost">
+          <div className="onePost" key={post.id}>
             <Link key={post.id} href={`/posts/${post.id}`}>
               <a>
                 {post.title}
