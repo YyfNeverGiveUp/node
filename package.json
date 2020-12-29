@@ -1,12 +1,12 @@
 {
-  "name": "nextjs-blog-1",
+  "name": "yyf-blog",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "concurrently \"next dev\" \"yarn compile:watch\"",
-    "compile:watch" : "babel -w ./src --out-dir dist --extensions .ts,.tsx",
-    "compile" : "babel ./src --out-dir dist --extensions .ts,.tsx",
-    "build": "next build",
+    "compile:watch": "babel -w ./src --out-dir dist --extensions .ts,.tsx",
+    "compile": "babel ./src --out-dir dist --extensions .ts,.tsx",
+    "build": "next build && npm start",
     "start": "next start",
     "m:create": "typeorm migration:create",
     "m:run": "typeorm migration:run",
