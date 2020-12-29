@@ -9,8 +9,8 @@ const create = async () => {
   // @ts-ignore
   return createConnection({
     ...config,
-    host: process.env.NODE_ENV === 'production' ? 'localhost' : config.host,
-    database: process.env.NODE_ENV === 'production' ? 'blog_production' : 'blog_development',
+    host:  'localhost' ,
+    database:  'blog_production' ,
     entities: [Post, User, Comment]
   });
 };
