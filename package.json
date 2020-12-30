@@ -14,7 +14,10 @@
     "e:create": "typeorm entity:create"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.3.0",
     "@babel/cli": "^7.10.1",
+    "anta": "^0.4.0",
+    "antd": "^4.9.4",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "github-markdown-css": "^4.0.0",

@@ -18,12 +18,10 @@ export class Post {
   title: string;
   @Column('text')
   content: string;
+  @Column('varchar')
+  author: string;
   @CreateDateColumn()
   createdAt: Date;
   @UpdateDateColumn()
   updatedAt: Date;
-  @ManyToOne('User', 'posts')
-  author: User;
-  @OneToMany('Comment', 'post')
-  comments: Comment[];
 }

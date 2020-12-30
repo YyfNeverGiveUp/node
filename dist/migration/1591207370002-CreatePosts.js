@@ -46,8 +46,8 @@ var CreatePosts1591207370002 = /*#__PURE__*/function () {
                     name: 'content',
                     type: 'text'
                   }, {
-                    name: 'author_id',
-                    type: 'int'
+                    name: 'author',
+                    type: 'varchar'
                   }]
                 }));
 

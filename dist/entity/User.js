@@ -25,15 +25,13 @@ var _initializerWarningHelper2 = _interopRequireDefault(require("@babel/runtime/
 
 var _typeorm = require("typeorm");
 
-var _getDatabaseConnection = require("../../lib/getDatabaseConnection");
-
 var _md = _interopRequireDefault(require("md5"));
 
 var _lodash = _interopRequireDefault(require("lodash"));
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _temp;
+var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _temp;
 
-var User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGeneratedColumn)('increment'), _dec3 = (0, _typeorm.Column)('varchar'), _dec4 = (0, _typeorm.Column)('varchar'), _dec5 = (0, _typeorm.CreateDateColumn)(), _dec6 = (0, _typeorm.UpdateDateColumn)(), _dec7 = (0, _typeorm.OneToMany)('Post', 'author'), _dec8 = (0, _typeorm.OneToMany)('Comment', 'user'), _dec9 = (0, _typeorm.BeforeInsert)(), _dec(_class = (_class2 = (_temp = /*#__PURE__*/function () {
+var User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGeneratedColumn)('increment'), _dec3 = (0, _typeorm.Column)('varchar'), _dec4 = (0, _typeorm.Column)('varchar'), _dec5 = (0, _typeorm.CreateDateColumn)(), _dec6 = (0, _typeorm.UpdateDateColumn)(), _dec7 = (0, _typeorm.BeforeInsert)(), _dec(_class = (_class2 = (_temp = /*#__PURE__*/function () {
   function User() {
     (0, _classCallCheck2["default"])(this, User);
     (0, _initializerDefineProperty2["default"])(this, "id", _descriptor, this);
@@ -41,8 +39,6 @@ var User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGe
     (0, _initializerDefineProperty2["default"])(this, "passwordDigest", _descriptor3, this);
     (0, _initializerDefineProperty2["default"])(this, "createdAt", _descriptor4, this);
     (0, _initializerDefineProperty2["default"])(this, "updatedAt", _descriptor5, this);
-    (0, _initializerDefineProperty2["default"])(this, "posts", _descriptor6, this);
-    (0, _initializerDefineProperty2["default"])(this, "comments", _descriptor7, this);
     (0, _defineProperty2["default"])(this, "errors", {
       username: [],
       password: [],
@@ -56,7 +52,6 @@ var User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGe
     key: "validate",
     value: function () {
       var _validate = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee() {
-        var found;
         return _regenerator["default"].wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -75,23 +70,12 @@ var User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGe
 
                 if (this.username.trim().length <= 3) {
                   this.errors.username.push('太短');
-                }
+                } // const found = await (await getDatabaseConnection()).manager.find(
+                //   User, {username: this.username});
+                // if (found.length > 0) {
+                //   this.errors.username.push('已存在，不能重复注册');
+                // }
 
-                _context.next = 6;
-                return (0, _getDatabaseConnection.getDatabaseConnection)();
-
-              case 6:
-                _context.next = 8;
-                return _context.sent.manager.find(User, {
-                  username: this.username
-                });
-
-              case 8:
-                found = _context.sent;
-
-                if (found.length > 0) {
-                  this.errors.username.push('已存在，不能重复注册');
-                }
 
                 if (this.password === '') {
                   this.errors.password.push('不能为空');
@@ -101,7 +85,7 @@ var User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGe
                   this.errors.passwordConfirmation.push('密码不匹配');
                 }
 
-              case 12:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -159,15 +143,5 @@ var User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGe
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor6 = (0, _applyDecoratedDescriptor2["default"])(_class2.prototype, "posts", [_dec7], {
-  configurable: true,
-  enumerable: true,
-  writable: true,
-  initializer: null
-}), _descriptor7 = (0, _applyDecoratedDescriptor2["default"])(_class2.prototype, "comments", [_dec8], {
-  configurable: true,
-  enumerable: true,
-  writable: true,
-  initializer: null
-}), (0, _applyDecoratedDescriptor2["default"])(_class2.prototype, "generatePasswordDigest", [_dec9], Object.getOwnPropertyDescriptor(_class2.prototype, "generatePasswordDigest"), _class2.prototype)), _class2)) || _class);
+}), (0, _applyDecoratedDescriptor2["default"])(_class2.prototype, "generatePasswordDigest", [_dec7], Object.getOwnPropertyDescriptor(_class2.prototype, "generatePasswordDigest"), _class2.prototype)), _class2)) || _class);
 exports.User = User;

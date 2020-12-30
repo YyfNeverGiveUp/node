@@ -1,4 +1,4 @@
-import {MigrationInterface, QueryRunner, Table} from 'typeorm';
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class CreatePosts1591207370002 implements MigrationInterface {
 
@@ -6,10 +6,10 @@ export class CreatePosts1591207370002 implements MigrationInterface {
     return await queryRunner.createTable(new Table({
       name: 'posts',
       columns: [
-        {name: 'id', isGenerated: true, type: 'int', generationStrategy: 'increment', isPrimary: true},
-        {name: 'title', type: 'varchar'},
-        {name: 'content', type: 'text'},
-        {name: 'author_id', type: 'int'}
+        { name: 'id', isGenerated: true, type: 'int', generationStrategy: 'increment', isPrimary: true },
+        { name: 'title', type: 'varchar' },
+        { name: 'content', type: 'text' },
+        { name: 'author', type: 'varchar' }
       ]
     }));
   }

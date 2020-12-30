@@ -33,17 +33,13 @@ var RenameColumns1591209418688 = /*#__PURE__*/function () {
 
               case 2:
                 _context.next = 4;
-                return queryRunner.renameColumn('posts', 'author_id', 'authorId');
+                return queryRunner.renameColumn('comments', 'user_id', 'userId');
 
               case 4:
                 _context.next = 6;
-                return queryRunner.renameColumn('comments', 'user_id', 'userId');
-
-              case 6:
-                _context.next = 8;
                 return queryRunner.renameColumn('comments', 'post_id', 'postId');
 
-              case 8:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -70,17 +66,13 @@ var RenameColumns1591209418688 = /*#__PURE__*/function () {
 
               case 2:
                 _context2.next = 4;
-                return queryRunner.renameColumn('posts', 'authorId', 'author_id');
+                return queryRunner.renameColumn('comments', 'userId', 'user_id');
 
               case 4:
                 _context2.next = 6;
-                return queryRunner.renameColumn('comments', 'userId', 'user_id');
-
-              case 6:
-                _context2.next = 8;
                 return queryRunner.renameColumn('comments', 'postId', 'post_id');
 
-              case 8:
+              case 6:
               case "end":
                 return _context2.stop();
             }

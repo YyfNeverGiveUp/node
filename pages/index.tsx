@@ -1,59 +1,85 @@
-import Link from "next/link"
+import style from "../styles/css/sign_in.module.scss"
+import axios, { AxiosResponse } from "axios"
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next"
 import { withSession } from "lib/withSession"
-
+import { Form, Input, Button, message } from "antd"
+import { useCallback } from "react"
 
 type Params = {
-  currentUser:User | null
+  currentUser: User | null
 }
 
-const Home: NextPage <Params> = (props) => {
+
+const Home: NextPage<Params> = (props) => {
   const { currentUser } = props
-  console.log(currentUser)
+  const onFinish = useCallback((values) => {
+    console.log("Success:", values)
+    axios.post(`/api/v1/sessions`, values).then(
+      () => {
+        message.success("登录成功")
+        setTimeout(() => {
+          window.location.href = "/posts"
+        }, 2000)
+      },
+      (error) => {
+        if (error.response) {
+          const response: AxiosResponse = error.response
+          const data = error.response.data
+          if (response.status === 422) {
+            message.error(data.username[0] || data.passsword[0])
+          } else if (response.status === 401) {
+            window.alert("请先登录")
+            window.location.href = `/sign_in?returnTo=${encodeURIComponent(window.location.pathname)}`
+          }
+        }
+      }
+    )
+  }, [])
+
+  const onFinishFailed = (errorInfo: any) => {
+    console.log("Failed:", errorInfo)
+  }
   return (
     <>
-      <div className="cover">
-        <img src="/logo.png" alt="" />
-        <h1>个人博客</h1>
+      <div className={style.cover}>
+        <img src="https://thirdwx.qlogo.cn/mmopen/vi_32/wRVMYXbZepricIoND3JTQU5BA0Zsrhwv5N3RZnyIibpgLweU2L9tgwFib0pt3n0Qy3NrgQwS549dwicFg4jVs7lD0Q/132" alt="" />
         {currentUser ? (
           <p>
-            <Link href="/posts">
-              <a>文章列表</a>
-            </Link>
+            <a href="/posts">文章列表</a>
           </p>
         ) : (
-          <p>
-            <Link href="/sign_in">
-              <a>登录</a>
-            </Link>
-          </p>
+          <div className={style.content}>
+            <Form name="basic" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+              <Form.Item label="用户账号" name="username" rules={[{ required: true, message: "Please input your username!" }]}>
+                <Input />
+              </Form.Item>
+
+              <Form.Item label="用户密码" name="password" rules={[{ required: true, message: "Please input your password!" }]}>
+                <Input.Password />
+              </Form.Item>
+
+              <Form.Item>
+                <Button type="primary" htmlType="submit" className={style.right}>
+                  登录
+                </Button>
+                <Button type="primary" danger className={style.right} onClick={() => {window.location.href="/sign_up"}}>
+                  去注册
+                </Button>
+              </Form.Item>
+            </Form>
+          </div>
         )}
       </div>
-      <style jsx>{`
-        .cover {
-          height: 100vh;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          flex-direction: column;
-        }
-        .cover > img {
-          width: 120px;
-          height: 120px;
-        }
-      `}</style>
     </>
   )
 }
 
-export const getServerSideProps: GetServerSideProps = withSession(
-  async (context: GetServerSidePropsContext) => {
-    const currentUser = (context.req as any).session.get("currentUser") || null
-    return {
-      props: {
-        currentUser,
-      },
-    }
+export const getServerSideProps: GetServerSideProps = withSession(async (context: GetServerSidePropsContext) => {
+  const currentUser = (context.req as any).session.get("currentUser") || null
+  return {
+    props: {
+      currentUser,
+    },
   }
-)
+})
 export default Home
