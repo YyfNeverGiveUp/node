@@ -1,15 +1,13 @@
 import React, {useCallback} from 'react';
-import {getPost, getPostIds} from '../../lib/posts';
 import {GetServerSideProps, GetServerSidePropsContext, NextPage} from 'next';
 import {getDatabaseConnection} from '../../lib/getDatabaseConnection';
 import {Post} from '../../src/entity/Post';
-import {UAParser} from 'ua-parser-js';
 import marked from 'marked';
 import Link from 'next/link';
 import {withSession} from '../../lib/withSession';
 import axios from 'axios';
 import {useRouter} from 'next/router';
-
+import Header from '../../components/header'
 type Props = {
   id: number;
   post: Post;
@@ -28,35 +26,40 @@ const postsShow: NextPage<Props> = (props) => {
   }, [id]);
   return (
     <>
+      {Header()}
       <div className="wrapper">
         <header>
           <h1>{post.title}</h1>
-          {currentUser &&
-          <p className="actions">
-            <Link href="/posts/[id]/edit" as={`/posts/${post.id}/edit`}><a>编辑</a></Link>
-            <button onClick={onRemove}>删除</button>
-          </p>
-          }
+          {currentUser && (
+            <p className="actions">
+              <Link href="/posts/[id]/edit" as={`/posts/${post.id}/edit`}>
+                <a>编辑</a>
+              </Link>
+              <button onClick={onRemove}>删除</button>
+            </p>
+          )}
         </header>
-        <article className="markdown-body" dangerouslySetInnerHTML={{__html: marked(post.content)}}>
-        </article>
+        <article className="markdown-body" dangerouslySetInnerHTML={{ __html: marked(post.content) }}></article>
       </div>
       <style jsx>{`
-      .actions > *{
-        margin: 4px; 
-      }
-      .actions > *:first-child{
-        margin-left: 0; 
-      }
-      .wrapper{
-        max-width: 800px;
-        margin: 16px auto;
-        padding: 0 16px;
-      }
-      h1{padding-bottom: 16px; border-bottom: 1px solid #666;}
+        .actions > * {
+          margin: 4px;
+        }
+        .actions > *:first-child {
+          margin-left: 0;
+        }
+        .wrapper {
+          max-width: 800px;
+          margin: 16px auto;
+          padding: 0 16px;
+        }
+        h1 {
+          padding-bottom: 16px;
+          border-bottom: 1px solid #666;
+        }
       `}</style>
     </>
-  );
+  )
 };
 
 export default postsShow;

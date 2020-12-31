@@ -19,7 +19,7 @@ const Home: NextPage<Params> = (props) => {
         message.success("登录成功")
         setTimeout(() => {
           window.location.href = "/posts"
-        }, 2000)
+        }, 1000)
       },
       (error) => {
         if (error.response) {
@@ -50,19 +50,26 @@ const Home: NextPage<Params> = (props) => {
         ) : (
           <div className={style.content}>
             <Form name="basic" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-              <Form.Item label="用户账号" name="username" rules={[{ required: true, message: "Please input your username!" }]}>
-                <Input />
+              <Form.Item name="username" rules={[{ required: true, message: "Please input your username!" }]}>
+                <Input placeholder="请输入账号" />
               </Form.Item>
 
-              <Form.Item label="用户密码" name="password" rules={[{ required: true, message: "Please input your password!" }]}>
-                <Input.Password />
+              <Form.Item name="password" rules={[{ required: true, message: "Please input your password!" }]}>
+                <Input.Password placeholder="请输入密码" />
               </Form.Item>
 
               <Form.Item>
                 <Button type="primary" htmlType="submit" className={style.right}>
                   登录
                 </Button>
-                <Button type="primary" danger className={style.right} onClick={() => {window.location.href="/sign_up"}}>
+                <Button
+                  type="primary"
+                  danger
+                  className={style.right}
+                  onClick={() => {
+                    window.location.href = "/sign_up"
+                  }}
+                >
                   去注册
                 </Button>
               </Form.Item>

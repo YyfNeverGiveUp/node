@@ -9,10 +9,12 @@ const create = async () => {
   // @ts-ignore
   return createConnection({
     ...config,
-    host: process.env.NODE_ENV === 'production' ? 'localhost' : config.host,
-    database: process.env.NODE_ENV === 'production' ? 'blog_production' : 'blog_development',
-    entities: [Post, User, Comment]
-  });
+    // host: process.env.NODE_ENV === 'production' ? 'localhost' : config.host,
+    // database: process.env.NODE_ENV === 'production' ? 'blog_production' : 'blog_development',
+    host: process.env.NODE_ENV === "production" ? config.host : config.host,
+    database: process.env.NODE_ENV === "production" ? "blog_development" : "blog_development",
+    entities: [Post, User, Comment],
+  })
 };
 
 const promise = (async function () {

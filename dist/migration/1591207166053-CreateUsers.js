@@ -45,9 +45,6 @@ var CreateUsers1591207166053 = /*#__PURE__*/function () {
                   }, {
                     name: 'password_digest',
                     type: 'varchar'
-                  }, {
-                    name: 'sex',
-                    type: 'varchar'
                   }]
                 }));
 

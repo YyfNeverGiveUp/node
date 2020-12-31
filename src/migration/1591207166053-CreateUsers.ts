@@ -1,4 +1,4 @@
-import {MigrationInterface, QueryRunner, Table} from 'typeorm';
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class CreateUsers1591207166053 implements MigrationInterface {
 
@@ -6,10 +6,9 @@ export class CreateUsers1591207166053 implements MigrationInterface {
     return await queryRunner.createTable(new Table({
       name: 'users',
       columns: [
-        {name: 'id', isGenerated: true, type: 'int', generationStrategy: 'increment', isPrimary: true},
-        {name: 'username', type: 'varchar'},
-        {name: 'password_digest', type: 'varchar'},
-        {name: 'sex', type: 'varchar' },
+        { name: 'id', isGenerated: true, type: 'int', generationStrategy: 'increment', isPrimary: true },
+        { name: 'username', type: 'varchar' },
+        { name: 'password_digest', type: 'varchar' }
       ]
     }));
   }

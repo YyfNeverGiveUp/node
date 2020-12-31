@@ -54,10 +54,10 @@ const PostsIndex: NextPage<Props> = (props) => {
         </header>
         {posts.map((post) => (
           <div className="onePost" key={post.id}>
-            <a href={`/posts/${post.id}`} className="flex">
-              <span>{getValue(post.title)}</span>
+            <a href={`/posts/${post.id}`} className="flex" key={post.id}>
+              <span className="bold">{getValue(post.title)}</span>
               <span>
-                {post.id}&nbsp;&nbsp;&nbsp;{getTime(post.updatedAt.toString())}
+                {post.author}&nbsp;&nbsp;&nbsp;{getTime(post.updatedAt.toString())}
               </span>
             </a>
           </div>
@@ -66,12 +66,12 @@ const PostsIndex: NextPage<Props> = (props) => {
       </div>
       <style jsx>{`
         .header {
-          padding: 10px;
-          padding-bottom: 0;
+          padding: 20px 10px 0;
           font-size: 20px;
           display: flex;
           justify-content: space-between;
           align-items: center;
+          height: 32px;
         }
         .posts {
           max-width: 800px;
@@ -95,8 +95,8 @@ const PostsIndex: NextPage<Props> = (props) => {
           border-bottom: none;
           color: #000;
         }
-        .onePost > a:hover {
-          color: #00adb5;
+        .onePost .bold {
+          font-weight: bold;
         }
         .onePost .flex {
           display: flex;
@@ -109,8 +109,6 @@ const PostsIndex: NextPage<Props> = (props) => {
 export default PostsIndex
 
 export const getServerSideProps: GetServerSideProps = withSession(async (context: GetServerSidePropsContext) => {
-  console.log("000000000000")
-  console.log(Post)
   const index = context.req.url.indexOf("?")
   const search = context.req.url.substr(index + 1)
   const query = qs.parse(search)
@@ -118,15 +116,15 @@ export const getServerSideProps: GetServerSideProps = withSession(async (context
   const currentUser = (context.req as any).session.get("currentUser") || null
   const connection = await getDatabaseConnection() // 第一次链接能不能用 get
   const perPage = 10
-  const [posts, count] = await connection.manager.findAndCount(Post, { skip: (page - 1) * perPage, take: perPage })
-  const post1 = await connection.manager.findOne("Post", 1)
-  console.log("111111111111")
-  console.log(post1)
-  const ua = context.req.headers["user-agent"]
-  const result = new UAParser(ua).getResult()
+  const [posts, count] = await connection
+    .getRepository(Post)
+    .createQueryBuilder("post") 
+    .orderBy("post.createdAt", "DESC")
+    .skip((page - 1) * perPage)
+    .take(perPage)
+    .getManyAndCount()
   return {
     props: {
-      browser: result.browser,
       currentUser,
       posts: JSON.parse(JSON.stringify(posts)),
       count: count,
