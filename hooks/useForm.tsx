@@ -56,31 +56,16 @@ export function useForm<T>(options: useFormOptions<T>) {
   }, [submit, formData]);
   const form = (
     <form onSubmit={_onSubmit}>
-      {fields.map(field =>
-        <div key={field.key.toString()}
-          className={cs('field', `field-${field.key}`, field.className)}>
+      {fields.map((field) => (
+        <div key={field.key.toString()} className={cs("field", `field-${field.key}`, field.className)}>
           <label className="label">
-            <span className="label-text">
-              {field.label}
-            </span>
-            {field.type === 'textarea' ?
-              <textarea className="control"
-                onChange={(e) => onChange(field.key, e.target.value)}
-                value={formData[field.key].toString()}/>
-              :
-              <input className="control"
-                type={field.type} value={formData[field.key].toString()}
-                onChange={(e) => onChange(field.key, e.target.value)}/>
-            }
+            <span className="label-text">{field.label}</span>
+            {field.type === "textarea" ? <textarea className="control" onChange={(e) => onChange(field.key, e.target.value)} value={formData[field.key].toString()} /> : <input className="control" type={field.type} value={formData[field.key].toString()} onChange={(e) => onChange(field.key, e.target.value)} />}
           </label>
-          {errors[field.key]?.length > 0 && <div>
-            {errors[field.key].join(',')}
-          </div>}
+          {errors[field.key]?.length > 0 && <div>{errors[field.key].join(",")}</div>}
         </div>
-      )}
-      <div>
-        {buttons}
-      </div>
+      ))}
+      <div className="buttons">{buttons}</div>
       <style jsx>{`
       .field{
         margin: 8px 0;
@@ -91,6 +76,8 @@ export function useForm<T>(options: useFormOptions<T>) {
       } 
       .label input {
         height: 32px;
+        outline:none;
+​       border:none;
       }
       .label > .label-text{
         white-space: nowrap;
@@ -99,9 +86,12 @@ export function useForm<T>(options: useFormOptions<T>) {
       .label > .control{
         width: 100%;
       }
+      .buttons {
+        float:right;
+      }
       `}</style>
     </form>
-  );
+  )
   return {
     form: form, setErrors: setErrors
   };

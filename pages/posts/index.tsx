@@ -36,6 +36,7 @@ const PostsIndex: NextPage<Props> = (props) => {
             window.history.go(-1)
           }}
         />
+        <div className="title">文章列表</div>
         {currentUser && (
           <Button
             type="primary"
@@ -49,9 +50,6 @@ const PostsIndex: NextPage<Props> = (props) => {
         )}
       </div>
       <div className="posts">
-        <header>
-          <h1>文章列表</h1>
-        </header>
         {posts.map((post) => (
           <div className="onePost" key={post.id}>
             <a href={`/posts/${post.id}`} className="flex" key={post.id}>
@@ -72,6 +70,13 @@ const PostsIndex: NextPage<Props> = (props) => {
           justify-content: space-between;
           align-items: center;
           height: 32px;
+          position: relative;
+        }
+        .header > .title {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -30%);
         }
         .posts {
           max-width: 800px;

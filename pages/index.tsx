@@ -28,7 +28,7 @@ const Home: NextPage<Params> = (props) => {
           if (response.status === 422) {
             message.error(data.username[0] || data.passsword[0])
           } else if (response.status === 401) {
-            window.alert("请先登录")
+            message.error('请先登陆')
             window.location.href = `/sign_in?returnTo=${encodeURIComponent(window.location.pathname)}`
           }
         }

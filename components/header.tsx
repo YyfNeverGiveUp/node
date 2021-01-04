@@ -1,7 +1,12 @@
 import React from "react"
 import { LeftOutlined } from "@ant-design/icons"
 
-const Header = () => {
+type Header = {
+  title?:string
+}
+
+const Header = (props:Header) => {
+  const {title} = props
   return (
     <>
       <div className="header">
@@ -10,6 +15,7 @@ const Header = () => {
             window.history.go(-1)
           }}
         />
+        <div className="title">{title || ""}</div>
       </div>
       <style jsx>{`
         .header {
@@ -19,6 +25,14 @@ const Header = () => {
           justify-content: space-between;
           align-items: center;
           height: 32px;
+          text-align: center;
+          position: relative;
+        }
+        .header > .title {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -30%);
         }
       `}</style>
     </>
