@@ -47,14 +47,14 @@ npm run dev
 
 ## 部署
 ```bash
-ssh blog@dev1 'sh /home/blog/app/bin/deploy.sh'
+
 ```
 
 ```bash 
 yarn install --production=false
 yarn build
 docker build -t fang/node-web-app .
-docker run --network=host -p 3000:3000 -d fang/node-web-app
+docker run --network=host -p 3000:3000 -d yyf/node-web-app
 
 pm2 start npm --name app -- run start
 ```
