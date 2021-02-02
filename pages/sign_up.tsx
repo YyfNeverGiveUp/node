@@ -33,7 +33,7 @@ const SignUp: NextPage = () => {
           if (response.status === 422) {
             message.error(getErrInfo(JSON.parse(JSON.stringify(data))))
           } else if (response.status === 401) {
-            window.alert("请先登录")
+            message.error("请先登录")
             window.location.href = `/sign_in?returnTo=${encodeURIComponent(window.location.pathname)}`
           }
         }

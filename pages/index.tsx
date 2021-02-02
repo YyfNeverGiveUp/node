@@ -9,6 +9,12 @@ type Params = {
   currentUser: User | null
 }
 
+const getErrInfo = (data: Err) => {
+  let result = []
+  data.username.length > 0 ? result.push(data.username[0]) : null
+  data.passwordConfirmation.length > 0 ? result.push(data.passwordConfirmation[0]) : null
+  return result[0] || "发生错误"
+}
 
 const Home: NextPage<Params> = (props) => {
   const { currentUser } = props
@@ -26,10 +32,12 @@ const Home: NextPage<Params> = (props) => {
           const response: AxiosResponse = error.response
           const data = error.response.data
           if (response.status === 422) {
-            message.error(data.username[0] || data.passsword[0])
+            message.error(getErrInfo(JSON.parse(JSON.stringify(data))))
           } else if (response.status === 401) {
-            message.error(data.username[0] || data.passsword[0])
-            window.location.href = `/sign_in?returnTo=${encodeURIComponent(window.location.pathname)}`
+            message.error("请先登录")
+            window.location.href = `/sign_in?returnTo=${encodeURIComponent(
+              window.location.pathname
+            )}`
           }
         }
       }
@@ -42,7 +50,10 @@ const Home: NextPage<Params> = (props) => {
   return (
     <>
       <div className={style.cover}>
-        <img src="https://thirdwx.qlogo.cn/mmopen/vi_32/wRVMYXbZepricIoND3JTQU5BA0Zsrhwv5N3RZnyIibpgLweU2L9tgwFib0pt3n0Qy3NrgQwS549dwicFg4jVs7lD0Q/132" alt="" />
+        <img
+          src="https://thirdwx.qlogo.cn/mmopen/vi_32/wRVMYXbZepricIoND3JTQU5BA0Zsrhwv5N3RZnyIibpgLweU2L9tgwFib0pt3n0Qy3NrgQwS549dwicFg4jVs7lD0Q/132"
+          alt=""
+        />
         {currentUser ? (
           <p>
             <a href="/posts">文章列表</a>
@@ -50,11 +61,17 @@ const Home: NextPage<Params> = (props) => {
         ) : (
           <div className={style.content}>
             <Form name="basic" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-              <Form.Item name="username" rules={[{ required: true, message: "Please input your username!" }]}>
+              <Form.Item
+                name="username"
+                rules={[{ required: true, message: "Please input your username!" }]}
+              >
                 <Input placeholder="请输入账号" />
               </Form.Item>
 
-              <Form.Item name="password" rules={[{ required: true, message: "Please input your password!" }]}>
+              <Form.Item
+                name="password"
+                rules={[{ required: true, message: "Please input your password!" }]}
+              >
                 <Input.Password placeholder="请输入密码" />
               </Form.Item>
 
@@ -81,12 +98,14 @@ const Home: NextPage<Params> = (props) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = withSession(async (context: GetServerSidePropsContext) => {
-  const currentUser = (context.req as any).session.get("currentUser") || null
-  return {
-    props: {
-      currentUser,
-    },
+export const getServerSideProps: GetServerSideProps = withSession(
+  async (context: GetServerSidePropsContext) => {
+    const currentUser = (context.req as any).session.get("currentUser") || null
+    return {
+      props: {
+        currentUser,
+      },
+    }
   }
-})
+)
 export default Home
