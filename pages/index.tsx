@@ -17,6 +17,7 @@ type Err = {
 const getErrInfo = (data: Err) => {
   let result = []
   data.username.length > 0 ? result.push(data.username[0]) : null
+  data.passsword.length > 0 ? result.push(data.passsword[0]) : null
   data.passwordConfirmation.length > 0 ? result.push(data.passwordConfirmation[0]) : null
   return result[0] || "发生错误"
 }
