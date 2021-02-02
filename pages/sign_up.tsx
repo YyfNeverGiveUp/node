@@ -29,7 +29,6 @@ const SignUp: NextPage = () => {
         if (error.response) {
           const response: AxiosResponse = error.response
           const data = error.response.data
-          console.log(data)
           if (response.status === 422) {
             message.error(getErrInfo(JSON.parse(JSON.stringify(data))))
           } else if (response.status === 401) {

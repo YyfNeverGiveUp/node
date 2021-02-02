@@ -9,6 +9,11 @@ type Params = {
   currentUser: User | null
 }
 
+type Err = {
+  username: string[]
+  passsword: string[]
+  passwordConfirmation: string[]
+}
 const getErrInfo = (data: Err) => {
   let result = []
   data.username.length > 0 ? result.push(data.username[0]) : null
