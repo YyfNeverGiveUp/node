@@ -11,14 +11,12 @@ type Params = {
 
 type Err = {
   username: string[]
-  passsword: string[]
-  passwordConfirmation: string[]
+  password: string[]
 }
 const getErrInfo = (data: Err) => {
   let result = []
   data.username.length > 0 ? result.push(data.username[0]) : null
-  data.passsword.length > 0 ? result.push(data.passsword[0]) : null
-  data.passwordConfirmation.length > 0 ? result.push(data.passwordConfirmation[0]) : null
+  data.password.length > 0 ? result.push(data.password[0]) : null
   return result[0] || "发生错误"
 }
 
@@ -38,7 +36,7 @@ const Home: NextPage<Params> = (props) => {
           const response: AxiosResponse = error.response
           const data = error.response.data
           if (response.status === 422) {
-            message.error(getErrInfo(JSON.parse(JSON.stringify(data))))
+            message.error(getErrInfo(data))
           } else if (response.status === 401) {
             message.error("请先登录")
             window.location.href = `/sign_in?returnTo=${encodeURIComponent(
