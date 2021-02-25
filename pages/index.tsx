@@ -26,7 +26,7 @@ const Home: NextPage<Params> = (props) => {
     console.log("Success:", values)
     axios.post(`/api/v1/sessions`, values).then(
       () => {
-        message.success("登录成功")
+        message.success("登录成功1")
         setTimeout(() => {
           window.location.href = "/posts"
         }, 1000)
